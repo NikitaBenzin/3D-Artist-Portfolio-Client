@@ -1,12 +1,8 @@
+import { Header } from '@/components/ui/Header'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { Providers } from './Providers'
-
-// import localFont from 'next/font/local'
-// const Cambridge = localFont({
-// 	src: '/font/Cambridge.woff'
-// })
 
 const Montserrat_font = Montserrat({
 	subsets: ['cyrillic', 'latin'],
@@ -27,9 +23,12 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${Montserrat_font.className} antialiased`}>
 				<Providers>
-					<main className="flex min-h-screen flex-col items-center justify-between">
-						{children}
-					</main>
+					<div className="container">
+						<Header />
+						<main className="flex min-h-screen flex-col items-center gap-6">
+							{children}
+						</main>
+					</div>
 				</Providers>
 			</body>
 		</html>

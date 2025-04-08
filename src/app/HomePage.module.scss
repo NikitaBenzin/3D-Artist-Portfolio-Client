@@ -1,0 +1,59 @@
+@reference "./globals.css";
+
+.categories-wrapper {
+	@apply grid mb-8 bg-zinc-950;
+	grid-template-rows: 250px auto;
+}
+
+.categories-heading {
+	@apply grid grid-cols-2 items-center px-12;
+	h2 {
+		@apply xl:text-7xl lg:text-5xl md:text-4xl sm:text-3xl text-xl;
+	}
+}
+
+.categories-slider {
+	@apply grid grid-cols-4 min-h-[500px];
+	li {
+		@apply relative;
+		&:hover {
+			a {
+				img {
+					@apply opacity-100;
+				}
+			}
+		}
+		&:hover {
+			@apply w-[120%] z-10;
+		}
+		&:hover:first-child {
+		}
+		&:hover:last-child {
+			@apply -left-[20%];
+		}
+		a {
+			div {
+				@apply flex flex-col justify-between h-full py-6 px-8;
+				p:last-child {
+					@apply text-end;
+				}
+			}
+			img {
+				@apply absolute h-full object-cover top-0 left-0 -z-10 opacity-0;
+			}
+		}
+	}
+}
+
+.slider-active {
+	/* @apply scale-x-50;
+	div {
+		@apply flex flex-col justify-between h-full;
+		p:last-child {
+			@apply text-end;
+		}
+	}
+	img {
+		@apply absolute h-full object-cover top-0 left-0 -z-10;
+	} */
+}

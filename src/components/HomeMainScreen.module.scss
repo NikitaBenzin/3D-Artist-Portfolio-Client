@@ -1,0 +1,29 @@
+@reference "../app/globals.css";
+
+.table-container {
+	@apply grid h-full tracking-widest;
+	grid-template-rows: 1fr 1fr 0.7fr 1fr;
+
+	li {
+		@apply flex items-center px-12;
+	}
+	li:not(:nth-child(3)) {
+		@apply xl:text-9xl lg:text-8xl md:text-7xl sm:text-5xl text-2xl uppercase;
+	}
+	li:nth-child(3),
+	li:nth-child(4) {
+		@apply justify-end;
+	}
+}
+
+.wrapper {
+	@apply w-full h-[90vh] max-h-[900px];
+}
+
+.header::after {
+	content: '';
+	background-image: url('/ProjectSequence.png');
+	top: 0;
+	left: 0;
+	@apply absolute bg-cover w-full 2xl:h-[962px] xl:h-[894.5px] lg:h-[894.5px] md:h-[894.5px] h-[894.5px] -z-10;
+}

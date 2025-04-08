@@ -1,4 +1,4 @@
-import { PUBLIC_PAGES } from '@/config/pages/public.pages'
+import { PUBLIC_PAGES } from '@/config/pages/public.config'
 import authService from '@/services/auth/auth.service'
 import { IFormData } from '@/types/auth.types'
 import { useMutation } from '@tanstack/react-query'

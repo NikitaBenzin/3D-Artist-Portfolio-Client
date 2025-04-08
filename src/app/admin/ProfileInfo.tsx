@@ -1,6 +1,6 @@
 'use client'
 import { MiniLoader } from '@/components/ui/MiniLoader'
-import { PUBLIC_PAGES } from '@/config/pages/public.pages'
+import { PUBLIC_PAGES } from '@/config/pages/public.config'
 import { useProfile } from '@/hooks/useProfile'
 import authService from '@/services/auth/auth.service'
 import { useMutation } from '@tanstack/react-query'
