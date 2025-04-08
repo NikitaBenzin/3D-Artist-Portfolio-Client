@@ -1,14 +1,14 @@
 export function CategorySlider() {
 	return (
 		<div className="slider-container">
-			<input type="radio" name="slide" id="c1" />
+			<input type="radio" name="slide" id="c1" defaultChecked />
 			<label
 				style={{ backgroundImage: `url('/Lake.png')` }}
 				htmlFor="c1"
 				className="card"
 			>
 				<div className="row">
-					<div className="icon">1</div>
+					<span className="vertical-text">Category</span>
 					<div className="description">
 						<h4>Winter</h4>
 						<p>Winter has so much to offer - creative activities</p>
@@ -22,7 +22,7 @@ export function CategorySlider() {
 				className="card"
 			>
 				<div className="row">
-					<div className="icon">2</div>
+					<span className="vertical-text">Category</span>
 					<div className="description">
 						<h4>Digital Technology</h4>
 						<p>Gets better every day - stay tuned</p>
@@ -36,7 +36,7 @@ export function CategorySlider() {
 				className="card"
 			>
 				<div className="row">
-					<div className="icon">3</div>
+					<span className="vertical-text">Category</span>
 					<div className="description">
 						<h4>Globalization</h4>
 						<p>Help people all over the world</p>
@@ -50,7 +50,7 @@ export function CategorySlider() {
 				className="card"
 			>
 				<div className="row">
-					<div className="icon">4</div>
+					<span className="vertical-text">Category</span>
 					<div className="description">
 						<h4>New technologies</h4>
 						<p>Space engineering becomes more and more advanced</p>

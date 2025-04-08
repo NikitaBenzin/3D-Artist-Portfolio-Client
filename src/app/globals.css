@@ -40,10 +40,11 @@ h2 {
 	height: 400px;
 	display: flex;
 	flex-wrap: nowrap;
-	justify-content: start;
+	justify-content: center;
 }
 
 .card {
+	position: relative;
 	width: 80px;
 	border-radius: 0.75rem;
 	background-size: cover;
@@ -59,19 +60,8 @@ h2 {
 
 .card > .row {
 	color: white;
-	display: flex;
-	flex-wrap: nowrap;
-}
-
-.card > .row > .icon {
-	background: #223;
-	color: white;
-	border-radius: 50%;
-	width: 50px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 15px;
+	display: grid;
+	grid-template-columns: 80px auto;
 }
 
 .card > .row > .description {
@@ -85,6 +75,7 @@ h2 {
 	transform: translateY(30px);
 	transition-delay: 0.3s;
 	transition: all 0.3s ease;
+	margin-bottom: 1rem;
 }
 
 .description p {
@@ -108,15 +99,78 @@ input:checked + label .description {
 	opacity: 1 !important;
 	transform: translateY(0) !important;
 }
-.card[htmlFor='c1'] {
-	background-image: url('/ProjectSequence.png');
+
+.vertical-text {
+	text-transform: uppercase;
+	position: relative;
+	transform: rotate(-90deg);
+	left: -30px;
+	bottom: 15px;
+	background: #000;
+	height: fit-content;
+	width: fit-content;
+	padding: 15px;
+	border-radius: 1.4rem;
 }
-.card[htmlFor='c2'] {
-	background-image: url('/ProjectSequence.png');
-}
-.card[htmlFor='c3'] {
-	background-image: url('/ProjectSequence.png');
-}
-.card[htmlFor='c4'] {
-	background-image: url('/ProjectSequence.png');
+
+
+@media (width <= 64rem /* 1024px */) {
+	.slider-container {
+		flex-direction: column;
+		gap: 1rem;
+		height: auto;
+	}
+	input:checked + label {
+    height: 300px;
+		width: 100%;
+	}
+	.card > .row {
+		color: #fff;
+    display: grid;
+    grid-template-rows: 88px auto;
+		grid-template-columns: 1fr 1fr;
+    padding-left: 1rem;
+	}	
+	input:checked + .card > .row {
+		grid-template-columns: 1fr;
+	}
+	.vertical-text {
+    text-transform: uppercase;
+    position: relative;
+    transform: rotate(0deg);
+    left: 0;
+    bottom: -15px;
+    background: #000;
+    height: fit-content;
+    width: fit-content;
+    padding: 15px;
+    border-radius: 1.4rem;
+	}
+	.card > .row > .description {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		overflow: hidden;
+		height: 80px;
+		width: fit-content;
+		opacity: 0;
+		transform: translateY(30px);
+		transition-delay: .3s;
+		transition: all .3s;
+		margin-bottom: 1rem;
+	}
+	.card {
+		position: relative;
+		width: 100%;
+		border-radius: .75rem;
+		background-size: cover;
+		cursor: pointer;
+		overflow: hidden;
+		border-radius: 2rem;
+		margin: 0;
+		display: flex;
+		align-items: flex-end;
+		transition: all .6s cubic-bezier(.28, -.03, 0, .99);
+		box-shadow: 0 10px 30px -5px #000c;
+	}
 }
