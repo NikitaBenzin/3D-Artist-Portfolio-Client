@@ -1,18 +1,15 @@
+'use client'
+
 import { MiniLoader } from '@/components/ui/MiniLoader'
 import postService from '@/services/post.service'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 
-export default async function Page({
-	params
-}: {
-	params: Promise<{ category: string }>
-}) {
+export default function Page() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['posts-by-category'],
-		queryFn: () => postService.getPostsByCategory(category)
+		queryFn: () => postService.getPostsByCategory()
 	})
-	const { category } = await params
 
 	if (isLoading)
 		return (
