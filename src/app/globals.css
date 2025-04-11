@@ -36,6 +36,10 @@ h2 {
 	@apply text-2xl;
 }
 
+main {
+	min-height: calc(100vh - 124px);
+}
+
 .slider-container {
 	height: 400px;
 	display: flex;
@@ -62,6 +66,7 @@ h2 {
 	color: white;
 	display: grid;
 	grid-template-columns: 80px auto;
+	align-items: self-end;
 }
 
 .card > .row > .description {
@@ -87,7 +92,7 @@ h2 {
 	text-transform: uppercase;
 }
 
-input {
+.slider-container > input {
 	display: none;
 }
 
@@ -103,8 +108,8 @@ input:checked + label .description {
 .vertical-text {
 	text-transform: uppercase;
 	position: relative;
-	transform: rotate(-90deg);
-	left: -30px;
+	writing-mode: vertical-rl;
+	left: 10px;
 	bottom: 15px;
 	background: #000;
 	height: fit-content;
@@ -134,15 +139,19 @@ input:checked + label .description {
 	input:checked + .card > .row {
 		grid-template-columns: 1fr;
 	}
+	input:checked + .card > .row > .description {
+		grid-column-start: 1;
+		grid-row-start: 1;
+	}
 	.vertical-text {
     text-transform: uppercase;
     position: relative;
-    transform: rotate(0deg);
+    writing-mode: horizontal-tb;
     left: 0;
-    bottom: -15px;
+		bottom: 13px;
     background: #000;
     height: fit-content;
-    width: fit-content;
+    width: max-content;
     padding: 15px;
     border-radius: 1.4rem;
 	}
@@ -151,7 +160,7 @@ input:checked + label .description {
 		justify-content: center;
 		flex-direction: column;
 		overflow: hidden;
-		height: 80px;
+		height: fit-content;
 		width: fit-content;
 		opacity: 0;
 		transform: translateY(30px);

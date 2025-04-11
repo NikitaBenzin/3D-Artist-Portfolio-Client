@@ -1,3 +1,4 @@
+import { Footer } from '@/components/ui/Footer'
 import { Header } from '@/components/ui/Header'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
@@ -25,9 +26,8 @@ export default function RootLayout({
 				<Providers>
 					<div className="container">
 						<Header />
-						<main className="flex min-h-screen flex-col items-center gap-6">
-							{children}
-						</main>
+						<main className="flex flex-col items-center gap-6">{children}</main>
+						<Footer />
 					</div>
 				</Providers>
 			</body>
