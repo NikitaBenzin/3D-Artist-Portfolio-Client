@@ -14,7 +14,7 @@ export function Header() {
 			}`}
 		>
 			<nav className="mx-12">
-				<ul className="flex gap-14">
+				<ul className="flex gap-6 md:gap-14">
 					<li>
 						<Link className="hover:underline" href={PUBLIC_PAGES.HOME}>
 							Home
