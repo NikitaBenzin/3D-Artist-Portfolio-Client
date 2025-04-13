@@ -1,0 +1,15 @@
+<div className="mb-4 flex items-center space-x-4">
+  <label htmlFor="platform">Platform</label>
+  <div className="relative w-full">
+    <select
+      id="platform"
+      className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+    >
+      <option value="artStation">ArtStation</option>
+      <option value="instagram">Instagram</option>
+      <option value="telegram"> Telegram</option>
+      <option value="youtube">YouTube</option>
+    </select>
+    <CgSelect className="absolute right-2 bottom-3.5" />
+  </div>
+</div>

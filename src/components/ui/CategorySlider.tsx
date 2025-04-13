@@ -3,6 +3,7 @@
 import { BACKEND_MAIN } from '@/constants'
 import postService from '@/services/post.service'
 import { useQuery } from '@tanstack/react-query'
+import Link from 'next/link'
 import React from 'react'
 import { MiniLoader } from './MiniLoader'
 
@@ -33,10 +34,13 @@ export function CategorySlider() {
 					>
 						<div className="row">
 							<span className="vertical-text">{post.categoryName}</span>
-							<div className="description">
+							<Link
+								href={`/category/${post.categoryName}`}
+								className="description hover:underline"
+							>
 								<h4>{post.title}</h4>
 								{/* <p>Winter has so much to offer - creative activities</p> */}
-							</div>
+							</Link>
 						</div>
 					</label>
 				</React.Fragment>

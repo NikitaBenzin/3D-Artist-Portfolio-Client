@@ -1,4 +1,3 @@
-'use client'
 import styles from './HomeMainScreen.module.scss'
 import { CategorySlider } from './ui/CategorySlider'
 
