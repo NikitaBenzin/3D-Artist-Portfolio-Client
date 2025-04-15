@@ -1,6 +1,6 @@
 export interface IPosts {
-	id?: number | null
-	title?: string | null
-	imagePath?: string | null
-	categoryName?: string | null
+	id?: string
+	title?: string
+	imagePath?: string
+	categoryName?: string
 }

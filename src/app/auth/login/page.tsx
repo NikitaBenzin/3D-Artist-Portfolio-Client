@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
 	return (
 		<AuthPageWrapper heading="Login">
-			<AuthForm isLogin></AuthForm>
+			<AuthForm isLogin />
 		</AuthPageWrapper>
 	)
 }

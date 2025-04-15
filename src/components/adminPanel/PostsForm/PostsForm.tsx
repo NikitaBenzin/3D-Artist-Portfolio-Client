@@ -2,31 +2,26 @@
 
 import { useLinkForm } from '@/components/adminPanel/SocialLinksForm/useLinksForm'
 import { StateToggle } from '@/components/ui/StateToggle'
-import socialLinksService from '@/services/socialLinks.service'
+import postService from '@/services/post.service'
 import { useQuery } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { CgSelect } from 'react-icons/cg'
 import { twMerge } from 'tailwind-merge'
 import { MiniLoader } from '../../ui/MiniLoader'
-
-export enum FormState {
-	CREATE,
-	UPDATE,
-	DELETE
-}
+import { FormState } from '../SocialLinksForm/SocialLinksForm'
 
 interface Props {
 	isOpen: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
+export function PostsForm({ isOpen, setIsOpen }: Props) {
 	const [formState, setFormState] = useState<FormState>(FormState.CREATE)
 	const { register, handleSubmit, isLoading, onSubmit } = useLinkForm(formState)
 
 	const { data, isLoading: isLoadingData } = useQuery({
-		queryKey: ['get-social-links'],
-		queryFn: () => socialLinksService.getSocialLinks()
+		queryKey: ['get-posts-in-form'],
+		queryFn: () => postService.fetchPosts()
 	})
 
 	if (isLoading || isLoadingData)
@@ -35,6 +30,7 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 				<MiniLoader width={150} height={150} />
 			</div>
 		)
+	console.log(data?.data)
 
 	return (
 		<>
@@ -55,7 +51,7 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 					!isOpen && 'hidden'
 				)}
 			>
-				<h2 className="text-2xl font-bold mb-4">Social Links</h2>
+				<h2 className="text-2xl font-bold mb-4">Posts</h2>
 				<StateToggle formState={formState} setFormState={setFormState} />
 				<form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
 					{formState == 0 ? (
@@ -79,7 +75,7 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 								>
 									{data?.data.map(item => (
 										<option key={item.id} value={item.id}>
-											{item.socialMedia}
+											{item.title}
 										</option>
 									))}
 								</select>
@@ -97,7 +93,7 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 								>
 									{data?.data.map(item => (
 										<option key={item.id} value={item.id}>
-											{item.socialMedia}
+											{item.title}
 										</option>
 									))}
 								</select>

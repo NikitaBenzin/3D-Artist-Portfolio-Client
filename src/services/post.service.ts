@@ -13,7 +13,8 @@ class PostsService {
 	async updatePost(data: IPosts) {
 		return instance.put(`${this._POSTS_URL_}`, { data })
 	}
-	async deletePost(id: number) {
+	async deletePost(data: IPosts) {
+		const id = data.id
 		return instance.delete(`${this._POSTS_URL_}`, { params: { id } })
 	}
 
