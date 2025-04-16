@@ -13,7 +13,9 @@ export const useUpload: TUseUpload = () => {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['upload file'],
 		mutationFn: (data: FormData) => fileService.upload(data),
-
+		onSuccess() {
+			toast.success('File added!')
+		},
 		onError: error => {
 			toast.error(error.message)
 		}

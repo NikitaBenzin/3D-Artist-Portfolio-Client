@@ -15,7 +15,7 @@ export function CategoryGallery({ category }: Params) {
 		queryKey: ['posts-by-category'],
 		queryFn: () => postService.getPostsByCategory(category)
 	})
-	console.log(data)
+
 	if (isLoading)
 		return (
 			<div className="mt-10">

@@ -4,8 +4,11 @@ import { Dispatch, SetStateAction, useId, useState } from 'react'
 
 import { MiniLoader } from '@/components/ui/MiniLoader'
 import { StateToggle } from '@/components/ui/StateToggle'
+import { BACKEND_MAIN } from '@/constants'
 import { fileService } from '@/services/file.service'
+import { IFiles } from '@/types/files.types'
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { CgSelect } from 'react-icons/cg'
 import { FiUploadCloud } from 'react-icons/fi'
 import { twMerge } from 'tailwind-merge'
@@ -20,6 +23,8 @@ interface Props {
 
 export function FilesForm({ isOpen, setIsOpen }: Props) {
 	const [formState, setFormState] = useState<FormState>(FormState.CREATE)
+	const [imagePreview, setImagePreview] = useState<IFiles>()
+
 	const {
 		register,
 		handleSubmit,
@@ -40,7 +45,6 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 				<MiniLoader width={150} height={150} />
 			</div>
 		)
-	console.log(data?.data)
 
 	return (
 		<>
@@ -91,28 +95,44 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 						</div>
 					) : (
 						formState == 2 && (
-							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-								<label
-									htmlFor="platform"
-									className="block text-gray-400 font-semibold mb-2"
-								>
-									SocialMedia
-								</label>
-								<div className="relative w-full">
-									<select
-										id="platform"
-										className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
-										{...register('id', { required: true })}
+							<>
+								<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+									<label
+										htmlFor="platform"
+										className="block text-gray-400 font-semibold mb-2"
 									>
-										{data?.data.map(item => (
-											<option key={item.id} value={item.id}>
-												{item.title}
-											</option>
-										))}
-									</select>
-									<CgSelect className="absolute right-2 bottom-3.5" />
+										Image
+									</label>
+									<div className="relative w-full">
+										<select
+											id="platform"
+											className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+											{...register('id', { required: true })}
+											onChange={e =>
+												setImagePreview(
+													data?.data.find(item => item.id === e.target.value)
+												)
+											}
+										>
+											{data?.data.map(item => (
+												<option key={item.id} value={item.id}>
+													{item.title}
+												</option>
+											))}
+										</select>
+										<CgSelect className="absolute right-2 bottom-3.5" />
+									</div>
 								</div>
-							</div>
+								{imagePreview && (
+									<Image
+										alt={`${imagePreview?.title}`}
+										src={`${BACKEND_MAIN}${imagePreview?.fileUrl}`}
+										width={198}
+										height={108}
+										className="w-full object-contain mb-4"
+									/>
+								)}
+							</>
 						)
 					)}
 
@@ -122,14 +142,14 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 							className={twMerge(
 								'bg-zinc-100 min-w-[252px] sm:min-w-[384px] py-3 cursor-pointer rounded-xl text-zinc-950 font-bold',
 								isLoading && 'opacity-75 cursor-not-allowed',
-								formState == 1 && 'bg-zinc-400 cursor-not-allowed'
+								formState != 2 && 'bg-zinc-400 cursor-not-allowed'
 							)}
-							disabled={isLoading || formState == 1}
+							disabled={isLoading || formState != 2}
 						>
 							{isLoadingFileForm ? (
 								<MiniLoader />
 							) : formState == 0 ? (
-								'Create'
+								'Upload a file'
 							) : formState == 1 ? (
 								"Can't update"
 							) : (
