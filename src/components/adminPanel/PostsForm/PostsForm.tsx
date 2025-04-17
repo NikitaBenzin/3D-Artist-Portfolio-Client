@@ -135,7 +135,7 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 										{...register('id', { required: true })}
 										onChange={e =>
 											setSelectedPost(
-												data?.data.find(item => item.id === e.target.value)
+												data?.data.find(item => item.id == e.target.value)
 											)
 										}
 									>
@@ -149,13 +149,62 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 								</div>
 							</div>
 							{selectedPost && (
-								<Image
-									alt={`${selectedPost?.title}`}
-									src={`${BACKEND_MAIN}${selectedPost?.imagePath}`}
-									width={198}
-									height={108}
-									className="w-full object-contain mb-4"
-								/>
+								<>
+									<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+										<label
+											htmlFor="platform"
+											className="block text-gray-400 font-semibold mb-2"
+										>
+											Image
+										</label>
+										<div className="relative w-full">
+											<select
+												id="platform"
+												className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+												{...register('imagePath', { required: true })}
+												onChange={e =>
+													setPreviewImage(
+														filesData?.data.find(
+															item => item.fileUrl === e.target.value
+														)
+													)
+												}
+											>
+												{filesData?.data.map(item => (
+													<option key={item.id} value={item.fileUrl}>
+														{item.title}
+													</option>
+												))}
+											</select>
+											<CgSelect className="absolute right-2 bottom-3.5" />
+										</div>
+									</div>
+									<Image
+										alt={`${selectedPost?.title}`}
+										src={`${BACKEND_MAIN}${selectedPost?.imagePath}`}
+										width={198}
+										height={108}
+										className="object-cover mb-4 w-[198px] h-[108px] justify-self-center"
+									/>
+									<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+										<label>Title</label>
+										<input
+											className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
+											type="text"
+											placeholder={selectedPost?.title}
+											{...register('title', { required: true })}
+										/>
+									</div>
+									<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+										<label>Category</label>
+										<input
+											className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
+											type="text"
+											placeholder={selectedPost?.categoryName}
+											{...register('categoryName', { required: true })}
+										/>
+									</div>
+								</>
 							)}
 						</>
 					) : (
