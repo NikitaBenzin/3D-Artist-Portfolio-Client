@@ -1,11 +1,11 @@
 'use client'
 
-import { useLinkForm } from '@/components/adminPanel/SocialLinksForm/useLinksForm'
 import { StateToggle } from '@/components/ui/StateToggle'
 import { BACKEND_MAIN } from '@/constants'
 import { fileService } from '@/services/file.service'
 import postService from '@/services/post.service'
 import { IFiles } from '@/types/files.types'
+import { IPosts } from '@/types/posts.types'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -13,6 +13,7 @@ import { CgSelect } from 'react-icons/cg'
 import { twMerge } from 'tailwind-merge'
 import { MiniLoader } from '../../ui/MiniLoader'
 import { FormState } from '../SocialLinksForm/SocialLinksForm'
+import { usePostForm } from './usePostsForm'
 
 interface Props {
 	isOpen: boolean
@@ -21,8 +22,9 @@ interface Props {
 
 export function PostsForm({ isOpen, setIsOpen }: Props) {
 	const [formState, setFormState] = useState<FormState>(FormState.CREATE)
-	const { register, handleSubmit, isLoading, onSubmit } = useLinkForm(formState)
-	const [imagePreview, setImagePreview] = useState<IFiles>()
+	const { register, handleSubmit, isLoading, onSubmit } = usePostForm(formState)
+	const [selectedPost, setSelectedPost] = useState<IPosts>()
+	const [previewImage, setPreviewImage] = useState<IFiles>()
 
 	const { data, isLoading: isLoadingData } = useQuery({
 		queryKey: ['get-posts-in-form'],
@@ -34,7 +36,7 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 		queryFn: () => fileService.fetchFiles()
 	})
 
-	if (isLoading || isLoadingData)
+	if (isLoading || isLoadingData || isLoadingFilesData)
 		return (
 			<div className="mt-10">
 				<MiniLoader width={150} height={150} />
@@ -76,14 +78,68 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 									<select
 										id="platform"
 										className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
-										{...register('id', { required: true })}
+										{...register('imagePath', { required: true })}
 										onChange={e =>
-											setImagePreview(
-												filesData?.data.find(item => item.id === e.target.value)
+											setPreviewImage(
+												filesData?.data.find(
+													item => item.fileUrl === e.target.value
+												)
 											)
 										}
 									>
 										{filesData?.data.map(item => (
+											<option key={item.id} value={item.fileUrl}>
+												{item.title}
+											</option>
+										))}
+									</select>
+									<CgSelect className="absolute right-2 bottom-3.5" />
+								</div>
+							</div>
+							{previewImage && (
+								<Image
+									alt={`${previewImage?.title}`}
+									src={`${BACKEND_MAIN}${previewImage?.fileUrl}`}
+									width={198}
+									height={108}
+									className="object-cover mb-4 w-[198px] h-[108px] justify-self-center"
+								/>
+							)}
+							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+								<label>Title</label>
+								<input
+									className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
+									type="text"
+									placeholder="Provide title"
+									{...register('title', { required: true })}
+								/>
+							</div>
+							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+								<label>Category</label>
+								<input
+									className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
+									type="text"
+									placeholder="Provide category name"
+									{...register('categoryName', { required: true })}
+								/>
+							</div>
+						</>
+					) : formState == 1 ? (
+						<>
+							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
+								<label htmlFor="platform">Post</label>
+								<div className="relative w-full">
+									<select
+										id="platform"
+										className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+										{...register('id', { required: true })}
+										onChange={e =>
+											setSelectedPost(
+												data?.data.find(item => item.id === e.target.value)
+											)
+										}
+									>
+										{data?.data.map(item => (
 											<option key={item.id} value={item.id}>
 												{item.title}
 											</option>
@@ -92,37 +148,19 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 									<CgSelect className="absolute right-2 bottom-3.5" />
 								</div>
 							</div>
-							{imagePreview && (
+							{selectedPost && (
 								<Image
-									alt={`${imagePreview?.title}`}
-									src={`${BACKEND_MAIN}${imagePreview?.fileUrl}`}
+									alt={`${selectedPost?.title}`}
+									src={`${BACKEND_MAIN}${selectedPost?.imagePath}`}
 									width={198}
 									height={108}
 									className="w-full object-contain mb-4"
 								/>
 							)}
 						</>
-					) : formState == 1 ? (
-						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label htmlFor="platform">SocialMedia</label>
-							<div className="relative w-full">
-								<select
-									id="platform"
-									className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
-									{...register('id', { required: true })}
-								>
-									{data?.data.map(item => (
-										<option key={item.id} value={item.id}>
-											{item.title}
-										</option>
-									))}
-								</select>
-								<CgSelect className="absolute right-2 bottom-3.5" />
-							</div>
-						</div>
 					) : (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label htmlFor="platform">SocialMedia</label>
+							<label htmlFor="platform">Post</label>
 							<div className="relative w-full">
 								<select
 									id="platform"
@@ -137,18 +175,6 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 								</select>
 								<CgSelect className="absolute right-2 bottom-3.5" />
 							</div>
-						</div>
-					)}
-					{formState != 2 && (
-						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label>Link</label>
-							<input
-								className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
-								type="url"
-								placeholder="Provide link"
-								pattern="https://.*"
-								{...register('link', { required: true })}
-							/>
 						</div>
 					)}
 
