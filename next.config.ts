@@ -4,7 +4,14 @@ const nextConfig: NextConfig = {
 	reactStrictMode: true,
 	poweredByHeader: false,
 	images: {
-		domains: ['localhost']
+		domains: ['localhost'],
+		remotePatterns: [
+			{
+				protocol: 'http',
+				hostname: 'localhost',
+				pathname: '**'
+			}
+		]
 	}
 }
 

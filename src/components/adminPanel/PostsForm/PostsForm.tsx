@@ -133,11 +133,16 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 										id="platform"
 										className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
 										{...register('id', { required: true })}
-										onChange={e =>
+										onChange={e => {
 											setSelectedPost(
 												data?.data.find(item => item.id == e.target.value)
 											)
-										}
+											setPreviewImage(
+												filesData?.data.find(
+													item => item.fileUrl == selectedPost?.imagePath
+												)
+											)
+										}}
 									>
 										{data?.data.map(item => (
 											<option key={item.id} value={item.id}>
@@ -180,8 +185,8 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 										</div>
 									</div>
 									<Image
-										alt={`${selectedPost?.title}`}
-										src={`${BACKEND_MAIN}${selectedPost?.imagePath}`}
+										alt={`${previewImage?.title}`}
+										src={`${BACKEND_MAIN}${previewImage?.fileUrl}`}
 										width={198}
 										height={108}
 										className="object-cover mb-4 w-[198px] h-[108px] justify-self-center"
