@@ -9,8 +9,8 @@ import { MiniLoader } from './MiniLoader'
 
 export function CategorySlider() {
 	const { data, isLoading } = useQuery({
-		queryKey: ['posts'],
-		queryFn: () => postService.fetchPosts()
+		queryKey: ['first-posts-by-category'],
+		queryFn: () => postService.getFirstPostsByCategory()
 	})
 
 	if (isLoading)
@@ -23,25 +23,22 @@ export function CategorySlider() {
 	return (
 		<div className="slider-container">
 			{data?.data.map((post, idx) => (
-				<React.Fragment key={post.id}>
+				<React.Fragment key={post._min.id}>
 					<input type="radio" name="slide" id={`c${idx}`} defaultChecked />
 					<label
 						style={{
-							backgroundImage: `url('${BACKEND_MAIN}${post.imagePath}')`
+							backgroundImage: `url('${BACKEND_MAIN}${post._min.imagePath}')`
 						}}
 						htmlFor={`c${idx}`}
 						className="card"
 					>
-						<div className="row">
-							<span className="vertical-text">{post.categoryName}</span>
-							<Link
-								href={`/category/${post.categoryName}`}
-								className="description hover:underline"
-							>
-								<h4>{post.title}</h4>
+						<Link className="row" href={`/category/${post._min.categoryName}`}>
+							<div className="vertical-text">{post._min.categoryName}</div>
+							<div className="description">
+								<h4 className="category-title">{post._min.title}</h4>
 								{/* <p>Winter has so much to offer - creative activities</p> */}
-							</Link>
-						</div>
+							</div>
+						</Link>
 					</label>
 				</React.Fragment>
 			))}

@@ -13,20 +13,16 @@ export function HomeMainScreen() {
 		<section className={styles['wrapper']}>
 			<ul className={`${styles['table-container']} ${Exo.className}`}>
 				<li>
-					<p>Innovate</p>
+					<p>Ready</p>
 				</li>
 				<li>
-					<p>Design</p>
+					<p>for Render</p>
 				</li>
 				<li>
-					<p className="max-w-[600px] md:text-2xl sm:text-xl text-sm">
-						Your ideas, our expertise, endless dimensions, redefining spaces,
-						one 3D design at a time, precision-crafted 3D designs for every
-						vision
-					</p>
+					<p>Prepped</p>
 				</li>
 				<li>
-					<p>Visualize 3d</p>
+					<p>for Play</p>
 				</li>
 			</ul>
 		</section>

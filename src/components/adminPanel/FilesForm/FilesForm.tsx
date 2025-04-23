@@ -39,13 +39,6 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 		queryFn: () => fileService.fetchFiles()
 	})
 
-	if (isLoadingFileForm || isLoadingData)
-		return (
-			<div className="mt-10">
-				<MiniLoader width={150} height={150} />
-			</div>
-		)
-
 	return (
 		<>
 			<div
@@ -68,7 +61,11 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 				<h2 className="text-2xl font-bold mb-4">Files</h2>
 				<StateToggle formState={formState} setFormState={setFormState} />
 				<form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
-					{formState == 0 ? (
+					{isLoadingFileForm || isLoadingData ? (
+						<div className="mt-10">
+							<MiniLoader width={150} height={150} />
+						</div>
+					) : formState == 0 ? (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
 							<label
 								htmlFor={inputId}
@@ -98,7 +95,7 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 							<>
 								<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
 									<label
-										htmlFor="platform"
+										htmlFor="file-selected-file"
 										className="block text-gray-400 font-semibold mb-2"
 									>
 										Image
@@ -106,7 +103,8 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 									<div className="relative w-full">
 										<select
 											id="platform"
-											className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+											className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+											defaultValue="selected"
 											{...register('id', { required: true })}
 											onChange={e =>
 												setImagePreview(
@@ -114,6 +112,9 @@ export function FilesForm({ isOpen, setIsOpen }: Props) {
 												)
 											}
 										>
+											<option value="selected" disabled hidden>
+												--select option--
+											</option>
 											{data?.data.map(item => (
 												<option key={item.id} value={item.id}>
 													{item.title}

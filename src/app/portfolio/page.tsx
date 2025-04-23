@@ -6,7 +6,7 @@ export default function Page() {
 			<div className="flex flex-col gap-8 max-w-[500px]">
 				<div>
 					<h1 className="font-extrabold">Portfolio page</h1>
-					<p>3D Design</p>
+					<p>3D Artist & Visual Designer</p>
 				</div>
 				<Image
 					alt="Portfolio image"
@@ -16,12 +16,12 @@ export default function Page() {
 					className="object-cover rounded-2xl"
 				/>
 				<div>
-					<h3 className="font-extrabold">Design For Me</h3>
+					<h3 className="font-extrabold mb-2">About Me</h3>
 					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-						doloribus suscipit quidem illo voluptatem mollitia non tenetur,
-						impedit eveniet harum eaque consectetur sunt laudantium molestiae,
-						ullam quod, natus deserunt commodi. Lorem ipsum dolor sit amet
+						I create stylized and atmospheric 3D content — from environments and
+						props to motion graphics and cinematic animations. My workflow is
+						rooted in Blender, Substance Painter, Unreal Engine 5, Photoshop,
+						and After Effects.
 					</p>
 				</div>
 			</div>
@@ -51,13 +51,10 @@ export default function Page() {
 							<li>Blender</li>
 							<li>Substance painter</li>
 							<li>Unreal Engine 5</li>
-							<li>Fusion 360</li>
 						</ul>
 						<ul>
-							<li>Blender</li>
-							<li>Substance painter</li>
-							<li>Unreal Engine 5</li>
-							<li>Fusion 360</li>
+							<li>After Effects</li>
+							<li>Photoshop</li>
 						</ul>
 					</div>
 				</div>

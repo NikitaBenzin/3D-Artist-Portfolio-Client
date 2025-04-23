@@ -44,7 +44,7 @@ export function AuthForm({ isLogin }: Props) {
 				ref={recaptchaRef}
 				size="normal"
 				sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-				theme="dark"
+				theme="light"
 				className={styles['recaptcha']}
 			/>
 			<div className="mb-3">

@@ -26,19 +26,25 @@ export function CategoryGallery({ category }: Params) {
 		return <h1 className="my-8 text-center">Category does not exist</h1>
 
 	return (
-		<ul className="flex flex-col gap-4 px-4">
-			{data?.data.map(item => (
-				<li key={item.id}>
-					<Image
-						alt={`${item.title}`}
-						src={`${BACKEND_MAIN}${item.imagePath}`}
-						width={0}
-						height={0}
-						sizes="100vw"
-						style={{ width: '100%', height: 'auto' }}
-					/>
-				</li>
-			))}
-		</ul>
+		<>
+			<h1 className="my-8 text-center">
+				Category: {data?.data[0].categoryName}
+			</h1>
+
+			<ul className="flex flex-col gap-4 px-4">
+				{data?.data.map(item => (
+					<li key={item.id}>
+						<Image
+							alt={`${item.title}`}
+							src={`${BACKEND_MAIN}${item.imagePath}`}
+							width={0}
+							height={0}
+							sizes="100vw"
+							style={{ width: '100%', height: 'auto' }}
+						/>
+					</li>
+				))}
+			</ul>
+		</>
 	)
 }

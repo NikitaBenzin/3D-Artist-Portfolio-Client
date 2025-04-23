@@ -29,13 +29,6 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 		queryFn: () => socialLinksService.getSocialLinks()
 	})
 
-	if (isLoading || isLoadingData)
-		return (
-			<div className="mt-10">
-				<MiniLoader width={150} height={150} />
-			</div>
-		)
-
 	return (
 		<>
 			<div
@@ -58,7 +51,11 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 				<h2 className="text-2xl font-bold mb-4">Social Links</h2>
 				<StateToggle formState={formState} setFormState={setFormState} />
 				<form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
-					{formState == 0 ? (
+					{isLoading || isLoadingData ? (
+						<div className="mt-10">
+							<MiniLoader width={150} height={150} />
+						</div>
+					) : formState == 0 ? (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
 							<label>SocialMedia</label>
 							<input
@@ -70,13 +67,17 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 						</div>
 					) : formState == 1 ? (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label htmlFor="platform">SocialMedia</label>
+							<label htmlFor="social-selected-update">SocialMedia</label>
 							<div className="relative w-full">
 								<select
-									id="platform"
+									id="social-selected-update"
 									className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+									defaultValue="selected"
 									{...register('id', { required: true })}
 								>
+									<option value="selected" disabled hidden>
+										--select option--
+									</option>
 									{data?.data.map(item => (
 										<option key={item.id} value={item.id}>
 											{item.socialMedia}
@@ -88,13 +89,17 @@ export function SocialLinksForm({ isOpen, setIsOpen }: Props) {
 						</div>
 					) : (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label htmlFor="platform">SocialMedia</label>
+							<label htmlFor="social-selected-delete">SocialMedia</label>
 							<div className="relative w-full">
 								<select
-									id="platform"
-									className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+									id="social-selected-delete"
+									className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+									defaultValue="selected"
 									{...register('id', { required: true })}
 								>
+									<option value="selected" disabled hidden>
+										--select option--
+									</option>
 									{data?.data.map(item => (
 										<option key={item.id} value={item.id}>
 											{item.socialMedia}

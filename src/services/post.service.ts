@@ -1,5 +1,5 @@
 import { axiosClassic, instance } from '@/api/axios'
-import { IPosts } from '@/types/posts.types'
+import { IFirstPosts, IPosts } from '@/types/posts.types'
 
 class PostsService {
 	private _POSTS_URL_ = '/posts'
@@ -19,7 +19,15 @@ class PostsService {
 	}
 
 	async getPostsByCategory(categoryName: string) {
-		return axiosClassic.get<IPosts[]>(`${this._POSTS_URL_}/${categoryName}`)
+		return axiosClassic.get<IPosts[]>(
+			`${this._POSTS_URL_}/category/${categoryName}`
+		)
+	}
+
+	async getFirstPostsByCategory() {
+		return axiosClassic.get<IFirstPosts[]>(
+			`${this._POSTS_URL_}/preview-category`
+		)
 	}
 }
 

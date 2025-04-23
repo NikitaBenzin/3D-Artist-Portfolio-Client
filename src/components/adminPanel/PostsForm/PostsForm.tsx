@@ -36,13 +36,6 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 		queryFn: () => fileService.fetchFiles()
 	})
 
-	if (isLoading || isLoadingData || isLoadingFilesData)
-		return (
-			<div className="mt-10">
-				<MiniLoader width={150} height={150} />
-			</div>
-		)
-
 	return (
 		<>
 			<div
@@ -65,19 +58,24 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 				<h2 className="text-2xl font-bold mb-4">Posts</h2>
 				<StateToggle formState={formState} setFormState={setFormState} />
 				<form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
-					{formState == 0 ? (
+					{isLoading || isLoadingData || isLoadingFilesData ? (
+						<div className="mt-10">
+							<MiniLoader width={150} height={150} />
+						</div>
+					) : formState == 0 ? (
 						<>
 							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
 								<label
-									htmlFor="platform"
+									htmlFor="post-selected-image"
 									className="block text-gray-400 font-semibold mb-2"
 								>
 									Image
 								</label>
 								<div className="relative w-full">
 									<select
-										id="platform"
-										className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+										id="post-selected-image"
+										className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+										defaultValue="post-selected-image"
 										{...register('imagePath', { required: true })}
 										onChange={e =>
 											setPreviewImage(
@@ -87,6 +85,9 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 											)
 										}
 									>
+										<option value="post-selected-image" disabled hidden>
+											--select option--
+										</option>
 										{filesData?.data.map(item => (
 											<option key={item.id} value={item.fileUrl}>
 												{item.title}
@@ -127,18 +128,30 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 					) : formState == 1 ? (
 						<>
 							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-								<label htmlFor="platform">Post</label>
+								<label htmlFor="post-selected-post">Post</label>
 								<div className="relative w-full">
 									<select
-										id="platform"
+										id="post-selected-post"
 										className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+										defaultValue="post-selected-post"
 										{...register('id', { required: true })}
-										onChange={e =>
+										onChange={e => {
 											setSelectedPost(
 												data?.data.find(item => item.id == e.target.value)
 											)
-										}
+											setPreviewImage(
+												filesData?.data.find(
+													item =>
+														item.fileUrl ==
+														data?.data.find(item => item.id == e.target.value)
+															?.imagePath
+												)
+											)
+										}}
 									>
+										<option value="post-selected-post" disabled hidden>
+											--select option--
+										</option>
 										{data?.data.map(item => (
 											<option key={item.id} value={item.id}>
 												{item.title}
@@ -148,19 +161,19 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 									<CgSelect className="absolute right-2 bottom-3.5" />
 								</div>
 							</div>
-							{selectedPost && (
+							{selectedPost && previewImage && (
 								<>
 									<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
 										<label
-											htmlFor="platform"
+											htmlFor="post-selected-post-update"
 											className="block text-gray-400 font-semibold mb-2"
 										>
 											Image
 										</label>
 										<div className="relative w-full">
 											<select
-												id="platform"
-												className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+												id="post-selected-post-update"
+												className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
 												{...register('imagePath', { required: true })}
 												onChange={e =>
 													setPreviewImage(
@@ -171,7 +184,13 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 												}
 											>
 												{filesData?.data.map(item => (
-													<option key={item.id} value={item.fileUrl}>
+													<option
+														key={item.id}
+														value={item.fileUrl}
+														defaultChecked={
+															item.fileUrl == previewImage.fileUrl
+														}
+													>
 														{item.title}
 													</option>
 												))}
@@ -180,8 +199,8 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 										</div>
 									</div>
 									<Image
-										alt={`${selectedPost?.title}`}
-										src={`${BACKEND_MAIN}${selectedPost?.imagePath}`}
+										alt={`${previewImage?.title}`}
+										src={`${BACKEND_MAIN}${previewImage?.fileUrl}`}
 										width={198}
 										height={108}
 										className="object-cover mb-4 w-[198px] h-[108px] justify-self-center"
@@ -209,13 +228,17 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 						</>
 					) : (
 						<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-							<label htmlFor="platform">Post</label>
+							<label htmlFor="post-delete-post">Post</label>
 							<div className="relative w-full">
 								<select
-									id="platform"
-									className="appearance-none min-w-[252px] bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+									id="post-delete-post"
+									className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+									defaultValue="post-delete-post"
 									{...register('id', { required: true })}
 								>
+									<option value="post-delete-post" disabled hidden>
+										--select option--
+									</option>
 									{data?.data.map(item => (
 										<option key={item.id} value={item.id}>
 											{item.title}

@@ -18,7 +18,6 @@ export async function getTokensFromRequest(request: NextRequest) {
 		} catch (error) {
 			if (error instanceof Error) {
 				if (error.message === 'invalid token') {
-					console.log('Invalid token')
 					request.cookies.delete(AuthToken.ACCESS_TOKEN)
 					return null
 				}

@@ -9,11 +9,11 @@ interface IAuthResponse {
 }
 
 export async function getNewTokensByRefresh(refreshToken: string) {
-	const response = await fetch(`${API_URL}/auth/refresh`, {
+	const response = await fetch(`${API_URL}/auth/access-token`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Cookie: `refreshToken="${refreshToken}`
+			Cookie: `refreshToken=${refreshToken}`
 		},
 		credentials: 'include'
 	})
