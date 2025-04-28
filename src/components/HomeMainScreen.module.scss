@@ -26,10 +26,10 @@
 
 .header::after {
 	content: '';
-	background-image: url('/ProjectSequence.png');
-	top: 0;
+	background-image: url('/StarWars.png');
+	top: 0px;
 	left: 0;
-	@apply absolute bg-cover w-full 2xl:h-[962px] xl:h-[894.5px] lg:h-[894.5px] md:h-[894.5px] h-[894.5px] -z-10;
+	@apply absolute bg-cover w-full 2xl:h-[962px] xl:h-[894.5px] lg:h-[894.5px] md:h-[894.5px] h-[894.5px] -z-10 bg-center;
 }
 
 .categories-wrapper {

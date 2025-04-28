@@ -2,6 +2,7 @@
 
 import { StateToggle } from '@/components/ui/StateToggle'
 import { BACKEND_MAIN } from '@/constants'
+import categoryService from '@/services/category.service'
 import { fileService } from '@/services/file.service'
 import postService from '@/services/post.service'
 import { IFiles } from '@/types/files.types'
@@ -34,6 +35,11 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 	const { data: filesData, isLoading: isLoadingFilesData } = useQuery({
 		queryKey: ['get-files-in-form'],
 		queryFn: () => fileService.fetchFiles()
+	})
+
+	const { data: categoryData, isLoading: isLoadingCategoryData } = useQuery({
+		queryKey: ['get-category-in-form'],
+		queryFn: () => categoryService.fetchCategory()
 	})
 
 	return (
@@ -116,13 +122,30 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 								/>
 							</div>
 							<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-								<label>Category</label>
-								<input
-									className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
-									type="text"
-									placeholder="Provide category name"
-									{...register('categoryName', { required: true })}
-								/>
+								<label
+									htmlFor="post-selected-image"
+									className="block text-gray-400 font-semibold mb-2"
+								>
+									Category
+								</label>
+								<div className="relative w-full">
+									<select
+										id="post-selected-image"
+										className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+										defaultValue="post-selected-image"
+										{...register('categoryId', { required: true })}
+									>
+										<option value="post-selected-image" disabled hidden>
+											--select option--
+										</option>
+										{categoryData?.data.map(item => (
+											<option key={item.id} value={item.id}>
+												{item.title}
+											</option>
+										))}
+									</select>
+									<CgSelect className="absolute right-2 bottom-3.5" />
+								</div>
 							</div>
 						</>
 					) : formState == 1 ? (
@@ -215,13 +238,30 @@ export function PostsForm({ isOpen, setIsOpen }: Props) {
 										/>
 									</div>
 									<div className="mb-4 flex space-x-4 flex-col sm:flex-row sm:items-center items-start gap-2 sm:gap-0">
-										<label>Category</label>
-										<input
-											className="bg-zinc-900 border border-zinc-800 w-full rounded-xl p-2 focus:outline-none"
-											type="text"
-											placeholder={selectedPost?.categoryName}
-											{...register('categoryName', { required: true })}
-										/>
+										<label
+											htmlFor="post-selected-image"
+											className="block text-gray-400 font-semibold mb-2"
+										>
+											Category
+										</label>
+										<div className="relative w-full">
+											<select
+												id="post-selected-image"
+												className="appearance-none w-full bg-zinc-900 border border-zinc-800 rounded-xl p-2 focus:outline-none"
+												defaultValue="post-selected-image"
+												{...register('categoryId', { required: true })}
+											>
+												<option value="post-selected-image" disabled hidden>
+													--select option--
+												</option>
+												{categoryData?.data.map(item => (
+													<option key={item.id} value={item.id}>
+														{item.title}
+													</option>
+												))}
+											</select>
+											<CgSelect className="absolute right-2 bottom-3.5" />
+										</div>
 									</div>
 								</>
 							)}

@@ -10,7 +10,7 @@ export default function Page() {
 				</div>
 				<Image
 					alt="Portfolio image"
-					src="/Lake.png"
+					src="/StarWars.png"
 					width={500}
 					height={500}
 					className="object-cover rounded-2xl"
@@ -30,14 +30,23 @@ export default function Page() {
 					<h2 className="font-extrabold mb-6 uppercase tracking-widest">
 						education
 					</h2>
-					<div>
-						<div className="flex justify-between gap-4 flex-col lg:flex-row">
+					<div className="flex flex-col gap-6">
+						<div className="flex justify-between gap-2 flex-col lg:flex-row">
 							<div>
-								<h3 className="font-bold">Institute</h3>
-								<p>ADAS asdas asdada</p>
+								<h3 className="font-medium">
+									Małopolska State University in Oświęcim Engineer's degree
+								</h3>
 							</div>
-							<span className="font-bold self-end md:self-start">
-								2022-2029
+							<span className="font-bold text-start md:text-end">
+								2022-2026 (expected)
+							</span>
+						</div>
+						<div className="flex justify-between gap-2 flex-col lg:flex-row">
+							<div>
+								<h3 className="font-medium">IT Step Academy</h3>
+							</div>
+							<span className="font-bold text-start md:text-end">
+								2016-2021
 							</span>
 						</div>
 					</div>
@@ -60,20 +69,16 @@ export default function Page() {
 				</div>
 				<div>
 					<h2 className="font-extrabold mb-6 uppercase tracking-widest">
-						analogoues skills
+						Technical Skills
 					</h2>
 					<div className="flex justify-between gap-6 flex-col lg:flex-row">
-						<ul>
-							<li>Blender</li>
-							<li>Substance painter</li>
-							<li>Unreal Engine 5</li>
-							<li>Fusion 360</li>
+						<ul className="flex flex-col gap-2">
+							<li>Low/High Poly Workflow</li>
+							<li>UV Mapping & Baking</li>
 						</ul>
-						<ul>
-							<li>Blender</li>
-							<li>Substance painter</li>
-							<li>Unreal Engine 5</li>
-							<li>Fusion 360</li>
+						<ul className="flex flex-col gap-2">
+							<li>PBR Texturing</li>
+							<li>Lighting & Rendering</li>
 						</ul>
 					</div>
 				</div>

@@ -2,7 +2,7 @@ export interface IPosts {
 	id?: string
 	title?: string
 	imagePath?: string
-	categoryName?: string
+	categoryId?: number
 }
 
 export interface IFirstPosts {
@@ -10,6 +10,6 @@ export interface IFirstPosts {
 		id?: string
 		title?: string
 		imagePath?: string
-		categoryName?: string
+		categoryId?: number
 	}
 }

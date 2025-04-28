@@ -26,11 +26,19 @@ const DynamicSocialLinksForm = dynamic(
 		),
 	{ ssr: false, loading: () => <MiniLoader width={150} height={150} /> }
 )
+const DynamicCategoryForm = dynamic(
+	() =>
+		import('@/components/adminPanel/CategoryForm/CategoryForm').then(
+			mod => mod.CategoryForm
+		),
+	{ ssr: false, loading: () => <MiniLoader width={150} height={150} /> }
+)
 
 export default function Page() {
 	const [isSocialLinksOpen, setIsSocialLinksOpen] = useState(false)
 	const [isPostsOpen, setIsPostsOpen] = useState(false)
 	const [isFileOpen, setIsFileOpen] = useState(false)
+	const [isCategoryOpen, setIsCategoryOpen] = useState(false)
 
 	return (
 		<div className="flex flex-col gap-6 mx-4">
@@ -75,6 +83,22 @@ export default function Page() {
 				</button>
 				{isFileOpen && (
 					<DynamicFilesForm isOpen={isFileOpen} setIsOpen={setIsFileOpen} />
+				)}
+			</section>
+			<section>
+				<button
+					onClick={() => setIsCategoryOpen(true)}
+					className={
+						'bg-zinc-100 w-full cursor-pointer py-3 rounded-xl text-zinc-950 font-bold'
+					}
+				>
+					Open Category
+				</button>
+				{isCategoryOpen && (
+					<DynamicCategoryForm
+						isOpen={isCategoryOpen}
+						setIsOpen={setIsCategoryOpen}
+					/>
 				)}
 			</section>
 		</div>

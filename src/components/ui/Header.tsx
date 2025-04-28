@@ -9,7 +9,7 @@ export function Header() {
 
 	return (
 		<header
-			className={`bg-zinc-950 py-4 flex justify-center md:justify-end ${
+			className={`py-4 flex justify-center md:justify-end ${
 				pathname === '/' && styles['header']
 			}`}
 		>
